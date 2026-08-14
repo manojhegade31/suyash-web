@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission विभक्ती - KBC Quiz</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,"Noto Sans Devanagari",sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+      radial-gradient(circle at top,#25105c,#080014 65%);
+    color:white;
+    padding:15px;
+}
+
+.quiz-container{
+    width:100%;
+    max-width:850px;
+    min-height:500px;
+    background:rgba(15,8,35,.94);
+    border:3px solid #f5a623;
+    border-radius:25px;
+    padding:25px;
+    box-shadow:
+      0 0 25px rgba(245,166,35,.5),
+      inset 0 0 20px rgba(245,166,35,.15);
+}
+
+.hide{
+    display:none!important;
+}
+
+/* START */
+
+.start-screen{
+    text-align:center;
+    padding:50px 15px;
+}
+
+.start-screen h1{
+    font-size:clamp(2.5rem,8vw,4.5rem);
+    color:#ffd43b;
+    text-shadow:
+      0 0 10px #ff9800,
+      0 0 30px #ff6f00;
+    margin-bottom:20px;
+}
+
+.start-screen h2{
+    color:#fff;
+    margin-bottom:12px;
+}
+
+.start-screen p{
+    color:#ddd;
+    font-size:1.15rem;
+    margin-bottom:35px;
+}
+
+.btn-main{
+    border:0;
+    border-radius:50px;
+    padding:15px 55px;
+    font-size:1.5rem;
+    font-weight:bold;
+    color:white;
+    background:linear-gradient(45deg,#f39c12,#e74c3c);
+    box-shadow:0 0 20px rgba(243,156,18,.7);
+    cursor:pointer;
+    transition:.25s;
+}
+
+.btn-main:hover{
+    transform:scale(1.06);
+}
+
+/* HEADER */
+
+.quiz-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+    padding-bottom:15px;
+    border-bottom:2px solid rgba(255,193,7,.3);
+}
+
+.question-number{
+    color:#ffd43b;
+    font-size:1.2rem;
+    font-weight:bold;
+}
+
+.score-box{
+    color:#ffd43b;
+    font-size:1.1rem;
+    font-weight:bold;
+}
+
+.timer-box{
+    background:#b71c1c;
+    padding:8px 15px;
+    border-radius:25px;
+    font-weight:bold;
+    box-shadow:0 0 12px #e53935;
+}
+
+.timer-warning{
+    animation:timerPulse .45s infinite alternate;
+}
+
+@keyframes timerPulse{
+    from{transform:scale(1);}
+    to{transform:scale(1.08);}
+}
+
+/* QUESTION */
+
+.question-box{
+    background:linear-gradient(135deg,#243b55,#141e30);
+    border:2px solid #3498db;
+    border-radius:16px;
+    padding:22px;
+    margin-bottom:20px;
+    font-size:1.3rem;
+    line-height:1.7;
+    box-shadow:0 5px 20px rgba(0,0,0,.5);
+}
+
+/* OPTIONS */
+
+.options-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.option-btn{
+    border:2px solid #777;
+    border-radius:14px;
+    padding:16px;
+    color:white;
+    background:linear-gradient(135deg,#29243c,#504a66);
+    font-size:1.1rem;
+    text-align:left;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option-btn:hover:not(:disabled){
+    transform:translateY(-3px);
+    border-color:#ffd43b;
+    background:linear-gradient(135deg,#5145a5,#7667d8);
+}
+
+.option-btn:disabled{
+    cursor:not-allowed;
+}
+
+.option-btn.correct{
+    background:linear-gradient(135deg,#087f3d,#19b95b)!important;
+    border-color:#38ff86!important;
+    box-shadow:0 0 18px rgba(46,204,113,.8);
+}
+
+.option-btn.wrong{
+    background:linear-gradient(135deg,#8b1111,#e53935)!important;
+    border-color:#ff6969!important;
+    box-shadow:0 0 18px rgba(231,76,60,.8);
+}
+
+/* EXPLANATION */
+
+.explanation-box{
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    border-radius:14px;
+    background:rgba(46,204,113,.1);
+    border:2px solid #2ecc71;
+    line-height:1.6;
+    font-size:1rem;
+}
+
+.explanation-box h3{
+    color:#2ecc71;
+    margin-bottom:8px;
+}
+
+/* NEXT */
+
+.next-btn{
+    display:none;
+    margin:18px auto 0;
+    border:0;
+    border-radius:30px;
+    padding:12px 30px;
+    background:#2980b9;
+    color:white;
+    font-size:1.15rem;
+    cursor:pointer;
+}
+
+.next-btn:hover{
+    background:#3498db;
+}
+
+/* RESULT */
+
+.result-screen{
+    text-align:center;
+    padding:40px 10px;
+}
+
+.trophy{
+    font-size:6rem;
+    animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-20px);}
+}
+
+.final-score{
+    font-size:2.4rem;
+    color:#ffd43b;
+    margin:20px 0;
+}
+
+.percentage{
+    font-size:1.5rem;
+    margin-bottom:10px;
+}
+
+.grade{
+    font-size:1.4rem;
+    color:#2ecc71;
+    margin-bottom:30px;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    body{
+        padding:8px;
+        align-items:flex-start;
+    }
+
+    .quiz-container{
+        margin-top:10px;
+        padding:15px;
+        border-radius:18px;
+    }
+
+    .quiz-header{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .question-box{
+        font-size:1.12rem;
+        padding:17px;
+    }
+
+    .options-grid{
+        grid-template-columns:1fr;
+    }
+
+    .option-btn{
+        font-size:1rem;
+        padding:14px;
+    }
+
+    .start-screen{
+        padding:40px 5px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="quiz-container">
+
+<!-- START SCREEN -->
+
+<div id="start-screen" class="start-screen">
+
+    <h1>Mission विभक्ती</h1>
+
+    <h2>🏆 KBC Style Marathi Grammar Quiz</h2>
+
+    <p>
+        विभक्ती व सामान्यरूप<br>
+        एकूण 45 प्रश्न • प्रत्येक प्रश्नासाठी 45 सेकंद
+    </p>
+
+    <button class="btn-main" onclick="startQuiz()">
+        ▶ START
+    </button>
+
+</div>
+
+
+<!-- QUIZ SCREEN -->
+
+<div id="quiz-screen" class="hide">
+
+    <div class="quiz-header">
+
+        <div class="question-number">
+            प्रश्न <span id="q-number">1</span>/45
+        </div>
+
+        <div class="timer-box" id="timer-box">
+            ⏱️ <span id="timer">45</span>s
+        </div>
+
+        <div class="score-box">
+            गुण: <span id="score">0</span>/45
+        </div>
+
+    </div>
+
+    <div id="question" class="question-box"></div>
+
+    <div id="options" class="options-grid"></div>
+
+    <div id="explanation" class="explanation-box">
+
+        <h3>💡 स्पष्टीकरण</h3>
+
+        <div id="explanation-text"></div>
+
+    </div>
+
+    <button id="next-btn" class="next-btn" onclick="nextQuestion()">
+        पुढील प्रश्न ➜
+    </button>
+
+</div>
+
+
+<!-- RESULT SCREEN -->
+
+<div id="result-screen" class="result-screen hide">
+
+    <div class="trophy">🏆</div>
+
+    <h2>🎉 अभिनंदन!</h2>
+
+    <p style="margin-top:10px;">
+        तुम्ही Mission विभक्ती पूर्ण केली.
+    </p>
+
+    <div class="final-score">
+        <span id="final-score">0</span> / 45
+    </div>
+
+    <div class="percentage">
+        टक्केवारी: <span id="percentage">0</span>%
+    </div>
+
+    <div class="grade" id="grade"></div>
+
+    <button class="btn-main" onclick="location.reload()">
+        🔄 पुन्हा खेळा
+    </button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ==========================================
+   QUESTION DATABASE
+========================================== */
+
+const rawQuestions = [
+
+{
+q:"नामे व सर्वनामे यांच्या वाक्यातील इतर शब्दांशी असणाऱ्या संबंधात जो बदल किंवा विकार होतो, त्याला काय म्हणतात?",
+options:["प्रत्यय","सामान्यरूप","विभक्ती","कारक"],
+answer:"विभक्ती",
+exp:"नामे व सर्वनामे यांच्या रूपात वाक्यातील संबंधानुसार होणाऱ्या बदलाला विभक्ती म्हणतात."
+},
+
+{
+q:"मराठी व्याकरणात एकूण किती विभक्ती मानल्या जातात?",
+options:["६","७","८","९"],
+answer:"८",
+exp:"प्रथमा, द्वितीया, तृतीया, चतुर्थी, पंचमी, षष्ठी, सप्तमी आणि संबोधन अशा आठ विभक्ती मानल्या जातात."
+},
+
+{
+q:"नामाचे किंवा सर्वनामाचे विभक्तीचे रूप तयार करण्यासाठी त्याला जी अक्षरे जोडली जातात, त्यांना काय म्हणतात?",
+options:["सामान्यरूप","प्रत्यय","कारक","क्रियापद"],
+answer:"प्रत्यय",
+exp:"नाम किंवा सर्वनामाला विभक्तीचे रूप देताना जोडली जाणारी अक्षरे म्हणजे प्रत्यय."
+},
+
+{
+q:"‘शिक्षकांनी मुलांना शाबासकी दिली.’ या वाक्यात ‘शिक्षकांनी’ या शब्दाला कोणता विभक्ती प्रत्यय आहे?",
+options:["नी","ना","ला","ने"],
+answer:"नी",
+exp:"शिक्षक → शिक्षकां → शिक्षकांनी. येथे ‘नी’ हा तृतीया विभक्तीचा अनेकवचनी प्रत्यय आहे."
+},
+
+{
+q:"‘मुलांना’ या शब्दातील विभक्ती प्रत्यय कोणता?",
+options:["ला","ना","नी","त"],
+answer:"ना",
+exp:"मुलांना = मुलां + ना. येथे ‘ना’ हा प्रत्यय आहे."
+},
+
+{
+q:"प्रथमा विभक्तीचा प्रत्यय कोणता?",
+options:["ला","ने","चा","प्रत्यय नसतो"],
+answer:"प्रत्यय नसतो",
+exp:"प्रथमा विभक्तीत सामान्यतः स्वतंत्र विभक्ती प्रत्यय लागत नाही."
+},
+
+{
+q:"‘फुलाने’ या शब्दात कोणती विभक्ती आहे?",
+options:["द्वितीया","तृतीया","चतुर्थी","पंचमी"],
+answer:"तृतीया",
+exp:"फुला + ने = फुलाने. ‘ने’ हा तृतीया विभक्तीचा एकवचनी प्रत्यय आहे."
+},
+
+{
+q:"‘फुलाला’ या शब्दाचा सामान्यरूप कोणता?",
+options:["फुला","फुले","फुलां","फुल"],
+answer:"फुला",
+exp:"फूल → फुला + ला = फुलाला."
+},
+
+{
+q:"‘शाळेत’ या शब्दाचे सामान्यरूप कोणते?",
+options:["शाळा","शाळे","शाळी","शाळ"],
+answer:"शाळे",
+exp:"शाळा → शाळे + त = शाळेत."
+},
+
+{
+q:"‘रामाला’ या शब्दात कोणता प्रत्यय आहे?",
+options:["ने","ला","ना","चा"],
+answer:"ला",
+exp:"राम + आ + ला = रामाला. येथे ‘ला’ हा प्रत्यय आहे."
+},
+
+{
+q:"तृतीया विभक्तीच्या एकवचनी प्रत्ययांचा योग्य संच कोणता?",
+options:["ने, ए, शी","नी, शी, ई, ही","स, ला, ते","चा, ची, चे"],
+answer:"ने, ए, शी",
+exp:"तृतीया एकवचनात ने, ए, शी हे प्रत्यय येतात."
+},
+
+{
+q:"तृतीया विभक्तीच्या अनेकवचनी प्रत्ययांचा योग्य संच कोणता?",
+options:["ने, ए, शी","नी, शी, ई, ही","त, ई, आ","ऊन, हून"],
+answer:"नी, शी, ई, ही",
+exp:"तृतीया अनेकवचनात नी, शी, ई, ही हे प्रत्यय येतात."
+},
+
+{
+q:"षष्ठी विभक्तीचे प्रत्यय कोणते?",
+options:["ने, ए, शी","त, ई, आ","चा, ची, चे","ऊन, हून"],
+answer:"चा, ची, चे",
+exp:"षष्ठी विभक्तीचे प्रत्यय चा, ची, चे असून त्यातून संबंध व्यक्त होतो."
+},
+
+{
+q:"सप्तमी विभक्तीचे प्रत्यय कोणते?",
+options:["त, ई, आ","चा, ची, चे","स, ला, ते","ऊन, हून"],
+answer:"त, ई, आ",
+exp:"सप्तमी विभक्तीत त, ई, आ हे प्रत्यय येतात."
+},
+
+{
+q:"‘फुलांनो’ हा शब्द कोणत्या विभक्तीचे उदाहरण आहे?",
+options:["षष्ठी","सप्तमी","संबोधन","पंचमी"],
+answer:"संबोधन",
+exp:"एखाद्याला हाक मारताना संबोधन विभक्ती वापरली जाते. ‘फुलांनो’ हे त्याचे उदाहरण आहे."
+},
+
+{
+q:"द्वितीया विभक्तीच्या एकवचनी प्रत्ययांचा योग्य संच कोणता?",
+options:["स, ला, ते","स, ला, ना, ते","नी, शी, ई, ही","त, ई, आ"],
+answer:"स, ला, ते",
+exp:"द्वितीया एकवचनात स, ला, ते हे प्रत्यय येतात."
+},
+
+{
+q:"द्वितीया विभक्तीच्या अनेकवचनी प्रत्ययांचा योग्य संच कोणता?",
+options:["स, ला, ते","स, ला, ना, ते","नी, शी, ई, ही","चा, ची, चे"],
+answer:"स, ला, ना, ते",
+exp:"द्वितीया अनेकवचनात स, ला, ना, ते हे प्रत्यय आढळतात."
+},
+
+{
+q:"चतुर्थी विभक्तीच्या एकवचनातील प्रत्यय कोणते?",
+options:["ऊन, हून","स, ला, ते","चा, ची, चे","त, ई, आ"],
+answer:"स, ला, ते",
+exp:"चतुर्थी एकवचनात स, ला, ते हे प्रत्यय येतात."
+},
+
+{
+q:"पंचमी विभक्तीचे प्रत्यय कोणते?",
+options:["स, ला","ने, ए, शी","ऊन, हून","चा, ची, चे"],
+answer:"ऊन, हून",
+exp:"पंचमी विभक्तीचे प्रमुख प्रत्यय ऊन आणि हून आहेत."
+},
+
+{
+q:"‘फुलास’ या शब्दातील सामान्यरूप आणि प्रत्यय यांचा योग्य पर्याय कोणता?",
+options:["फुल + स","फुला + स","फुले + स","फुलां + स"],
+answer:"फुला + स",
+exp:"फूल → फुला हे सामान्यरूप आणि त्याला स प्रत्यय लागून ‘फुलास’ तयार होते."
+},
+
+{
+q:"‘फुलांनी’ या शब्दाचे योग्य विश्लेषण कोणते?",
+options:["फूल + नी","फुला + नी","फुलां + नी","फुले + नी"],
+answer:"फुलां + नी",
+exp:"फूल → फुलां हे सामान्यरूप; त्याला ‘नी’ प्रत्यय जोडल्यावर फुलांनी होते."
+},
+
+{
+q:"‘रामाने’ या शब्दाचे सामान्यरूप कोणते?",
+options:["राम","रामा","रामां","रामी"],
+answer:"रामा",
+exp:"राम → रामा + ने = रामाने."
+},
+
+{
+q:"‘कुत्र्याला’ या शब्दाचे सामान्यरूप कोणते?",
+options:["कुत्रा","कुत्रे","कुत्र्या","कुत्र्यां"],
+answer:"कुत्र्या",
+exp:"कुत्रा → कुत्र्या + ला = कुत्र्याला."
+},
+
+{
+q:"‘रस्त्यात’ या शब्दाचे सामान्यरूप कोणते?",
+options:["रस्ता","रस्ते","रस्त्या","रस्त"],
+answer:"रस्त्या",
+exp:"रस्ता → रस्त्या + त = रस्त्यात."
+},
+
+{
+q:"‘गोविंदाला’ या शब्दातील सामान्यरूप कोणते?",
+options:["गोविंद","गोविंदा","गोविंदी","गोविंदां"],
+answer:"गोविंदा",
+exp:"गोविंद → गोविंदा + ला = गोविंदाला."
+},
+
+{
+q:"‘वर्गात’ या शब्दातील सामान्यरूप कोणते?",
+options:["वर्ग","वर्गा","वर्गी","वर्गां"],
+answer:"वर्गा",
+exp:"वर्ग → वर्गा + त = वर्गात."
+},
+
+{
+q:"‘रामाने पत्र लिहिले.’ या वाक्यात ‘रामाने’ या शब्दाचे सामान्यरूप व प्रत्यय कोणता?",
+options:["राम + ने","रामा + ने","रामां + नी","राम + नी"],
+answer:"रामा + ने",
+exp:"रामचे सामान्यरूप रामा होते. त्याला ‘ने’ प्रत्यय लागून ‘रामाने’ तयार होते."
+},
+
+{
+q:"‘मुलांना गोष्टी आवडतात.’ या वाक्यात ‘मुलांना’ या शब्दाचे योग्य विश्लेषण कोणते?",
+options:["मुल + ना","मुला + ना","मुलां + ना","मुले + ना"],
+answer:"मुलां + ना",
+exp:"मूल या शब्दाचे अनेकवचनी सामान्यरूप मुलां होते. त्याला ना प्रत्यय लागतो."
+},
+
+{
+q:"‘घोड्याला चारा दिला.’ या वाक्यात ‘घोड्याला’ या शब्दाचे सामान्यरूप कोणते?",
+options:["घोडा","घोडे","घोड्या","घोड्यां"],
+answer:"घोड्या",
+exp:"घोडा → घोड्या + ला = घोड्याला."
+},
+
+{
+q:"‘शाळेत विद्यार्थी शिकतात.’ या वाक्यात ‘शाळेत’ या शब्दाचा विभक्ती प्रत्यय कोणता?",
+options:["ला","ने","त","चा"],
+answer:"त",
+exp:"शाळा → शाळे + त = शाळेत. येथे ‘त’ हा सप्तमीचा प्रत्यय आहे."
+},
+
+{
+q:"‘मुलांनो, शांत बसा.’ या वाक्यात ‘मुलांनो’ हा कोणत्या विभक्तीचा शब्द आहे?",
+options:["पंचमी","षष्ठी","सप्तमी","संबोधन"],
+answer:"संबोधन",
+exp:"एखाद्याला हाक मारण्यासाठी संबोधन विभक्ती वापरली जाते."
+},
+
+{
+q:"‘फुलाने सुगंध पसरवला.’ या वाक्यात ‘फुलाने’ या शब्दाचे योग्य विश्लेषण कोणते?",
+options:["फूल + ने","फुला + ने","फुलां + नी","फुले + ने"],
+answer:"फुला + ने",
+exp:"फूल → फुला + ने = फुलाने."
+},
+
+{
+q:"‘शेतकऱ्यांनी मेहनत केली.’ या वाक्यात ‘शेतकऱ्यांनी’ या शब्दातील सामान्यरूप कोणते?",
+options:["शेतकरी","शेतकऱ्या","शेतकऱ्यां","शेतकऱ्ये"],
+answer:"शेतकऱ्यां",
+exp:"शेतकरी → शेतकऱ्यां + नी = शेतकऱ्यांनी."
+},
+
+{
+q:"‘आईने मुलाला पुस्तक दिले.’ या वाक्यात ‘मुलाला’ या शब्दाचे योग्य विश्लेषण कोणते?",
+options:["मुल + ला","मुला + ला","मुलां + ला","मुली + ला"],
+answer:"मुला + ला",
+exp:"मूल → मुला + ला = मुलाला. येथे ‘ला’ हा चतुर्थीचा अर्थ व्यक्त करतो."
+},
+
+{
+q:"‘पक्षी झाडावर बसला.’ या वाक्यात ‘झाडावर’ या शब्दाचे सामान्यरूप कोणते?",
+options:["झाड","झाडा","झाडावर","झाडां"],
+answer:"झाडा",
+exp:"झाड → झाडा + वर = झाडावर."
+},
+
+{
+q:"‘रामाच्या मित्राने मला भेटले.’ या वाक्यात ‘रामाच्या’ या शब्दातील विभक्ती प्रत्यय कोणता?",
+options:["ने","ला","च्या","त"],
+answer:"च्या",
+exp:"रामाचा/रामाची/रामाचे या षष्ठीच्या रूपांमध्ये ‘च्या’ हे रूप आढळते."
+},
+
+{
+q:"‘गावाहून शहरात आलो.’ या वाक्यात ‘गावाहून’ कोणत्या विभक्तीचे उदाहरण आहे?",
+options:["तृतीया","चतुर्थी","पंचमी","सप्तमी"],
+answer:"पंचमी",
+exp:"‘ऊन/हून’ हे पंचमी विभक्तीचे प्रमुख प्रत्यय आहेत."
+},
+
+{
+q:"‘मोत्याची माळ सुंदर आहे.’ या वाक्यात ‘मोत्याची’ या शब्दाचे सामान्यरूप कोणते?",
+options:["मोती","मोत्या","मोत्य","मोत्यां"],
+answer:"मोत्या",
+exp:"मोती → मोत्या + ची = मोत्याची."
+},
+
+{
+q:"‘नदीत पाणी वाहत आहे.’ या वाक्यात ‘नदीत’ या शब्दाचे योग्य विश्लेषण कोणते?",
+options:["नदी + त","नद्या + त","नदी + ई","नद + त"],
+answer:"नदी + त",
+exp:"नदी + त = नदीत. येथे ‘त’ हा सप्तमी विभक्तीचा प्रत्यय आहे."
+},
+
+{
+q:"‘नद्यांमध्ये पाणी आहे.’ या वाक्यात ‘नद्यांमध्ये’ या शब्दाचे सामान्यरूप कोणते?",
+options:["नदी","नद्या","नद्यां","नद"],
+answer:"नद्यां",
+exp:"नदी → नद्या → नद्यां + मध्ये = नद्यांमध्ये."
+},
+
+{
+q:"‘भाऊने मला मदत केली.’ या वाक्यात ‘भाऊने’ या शब्दाचे सामान्यरूप कोणते?",
+options:["भाऊ","भावा","भाव","भावां"],
+answer:"भावा",
+exp:"भाऊ या शब्दाचे सामान्यरूप भावा होते; ‘ने’ प्रत्ययाने भावाने हे रूप तयार होते."
+},
+
+{
+q:"‘पाण्यात मासे आहेत.’ या वाक्यात ‘पाण्यात’ या शब्दाचे योग्य विश्लेषण कोणते?",
+options:["पाणी + त","पाण्या + त","पाण्यां + त","पाना + त"],
+answer:"पाण्या + त",
+exp:"पाणी → पाण्या + त = पाण्यात."
+},
+
+{
+q:"‘कुंकवाचा रंग सुंदर आहे.’ या वाक्यात ‘कुंकवाचा’ या शब्दाचे सामान्यरूप कोणते?",
+options:["कुंकू","कुंकवा","कुंकवी","कुंकवां"],
+answer:"कुंकवा",
+exp:"कुंकू → कुंकवा + चा = कुंकवाचा."
+},
+
+{
+q:"‘फडक्यांचा रंग पांढरा आहे.’ या वाक्यात ‘फडक्यांचा’ या शब्दाचे सामान्यरूप कोणते?",
+options:["फडके","फडक्या","फडक्यां","फडक"],
+answer:"फडक्यां",
+exp:"फडके → फडक्या → फडक्यां + चा = फडक्यांचा."
+},
+
+{
+q:"खालीलपैकी कोणत्या पर्यायात मूळ शब्द → सामान्यरूप → विभक्ती प्रत्यय → अंतिम शब्द हा क्रम पूर्णपणे योग्य आहे?",
+options:[
+"फूल → फुल → ने → फुलाने",
+"घोडा → घोड्या → ला → घोड्याला",
+"नदी → नद्या → त → नदीत",
+"भाऊ → भाऊ → ने → भावाने"
+],
+answer:"घोडा → घोड्या → ला → घोड्याला",
+exp:"घोडा → घोड्या हे सामान्यरूप; त्याला ला प्रत्यय लागतो आणि घोड्याला हा शब्द तयार होतो."
+},
+
+{
+q:"खालीलपैकी कोणत्या पर्यायात विभक्ती प्रत्यय व सामान्यरूप दोन्ही अचूक आहेत?",
+options:[
+"शिक्षकांनी = शिक्षक + नी",
+"मुलांना = मुला + ना",
+"नद्यांनी = नद्या + नी",
+"शाळेत = शाळा + त"
+],
+answer:"नद्यांनी = नद्या + नी",
+exp:"नदीचे अनेकवचनी सामान्यरूप नद्या होते; त्याला ‘नी’ प्रत्यय लागून नद्यांनी होते."
+}
+
+];
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+let questions=[];
+let currentQuestion=0;
+let score=0;
+let timer;
+let timeLeft=45;
+let answered=false;
+
+
+/* ==========================================
+   SHUFFLE
+========================================== */
+
+function shuffle(array){
+
+    for(let i=array.length-1;i>0;i--){
+
+        const j=Math.floor(Math.random()*(i+1));
+
+        [array[i],array[j]]=[array[j],array[i]];
+    }
+
+    return array;
+}
+
+
+/* ==========================================
+   START QUIZ
+========================================== */
+
+function startQuiz(){
+
+    questions=JSON.parse(JSON.stringify(rawQuestions));
+
+    shuffle(questions);
+
+    currentQuestion=0;
+    score=0;
+
+    document.getElementById("score").innerText=score;
+
+    document.getElementById("start-screen")
+        .classList.add("hide");
+
+    document.getElementById("quiz-screen")
+        .classList.remove("hide");
+
+    loadQuestion();
+}
+
+
+/* ==========================================
+   LOAD QUESTION
+========================================== */
+
+function loadQuestion(){
+
+    clearInterval(timer);
+
+    answered=false;
+
+    timeLeft=45;
+
+    document.getElementById("timer").innerText=timeLeft;
+
+    document.getElementById("timer-box")
+        .classList.remove("timer-warning");
+
+    document.getElementById("q-number").innerText=
+        currentQuestion+1;
+
+    document.getElementById("explanation")
+        .style.display="none";
+
+    document.getElementById("next-btn")
+        .style.display="none";
+
+    const q=questions[currentQuestion];
+
+    document.getElementById("question").innerHTML=q.q;
+
+    const options=[...q.options];
+
+    shuffle(options);
+
+    const container=document.getElementById("options");
+
+    container.innerHTML="";
+
+    options.forEach(option=>{
+
+        const button=document.createElement("button");
+
+        button.className="option-btn";
+
+        button.innerText=option;
+
+        button.onclick=()=>{
+            selectAnswer(button,option);
+        };
+
+        container.appendChild(button);
+    });
+
+    startTimer();
+}
+
+
+/* ==========================================
+   TIMER
+========================================== */
+
+function startTimer(){
+
+    timer=setInterval(()=>{
+
+        timeLeft--;
+
+        document.getElementById("timer").innerText=
+            timeLeft;
+
+        if(timeLeft<=10){
+
+            document.getElementById("timer-box")
+                .classList.add("timer-warning");
+        }
+
+        if(timeLeft<=0){
+
+            clearInterval(timer);
+
+            timeOut();
+        }
+
+    },1000);
+}
+
+
+/* ==========================================
+   SELECT ANSWER
+========================================== */
+
+function selectAnswer(button,selected){
+
+    if(answered) return;
+
+    answered=true;
+
+    clearInterval(timer);
+
+    const q=questions[currentQuestion];
+
+    const buttons=
+        document.querySelectorAll(".option-btn");
+
+    buttons.forEach(btn=>{
+        btn.disabled=true;
+    });
+
+    if(selected===q.answer){
+
+        button.classList.add("correct");
+
+        score++;
+
+        document.getElementById("score").innerText=score;
+
+        playCorrectSound();
+
+    }else{
+
+        button.classList.add("wrong");
+
+        highlightCorrect(q.answer);
+
+        playWrongSound();
+    }
+
+    showExplanation(q.exp);
+}
+
+
+/* ==========================================
+   TIME OUT
+========================================== */
+
+function timeOut(){
+
+    if(answered) return;
+
+    answered=true;
+
+    const q=questions[currentQuestion];
+
+    const buttons=
+        document.querySelectorAll(".option-btn");
+
+    buttons.forEach(btn=>{
+        btn.disabled=true;
+    });
+
+    highlightCorrect(q.answer);
+
+    showExplanation(
+        "⏰ <b>वेळ संपली!</b><br><br>"+q.exp
+    );
+
+    playWrongSound();
+}
+
+
+/* ==========================================
+   HIGHLIGHT CORRECT
+========================================== */
+
+function highlightCorrect(answer){
+
+    const buttons=
+        document.querySelectorAll(".option-btn");
+
+    buttons.forEach(btn=>{
+
+        if(btn.innerText===answer){
+
+            btn.classList.add("correct");
+        }
+
+    });
+}
+
+
+/* ==========================================
+   EXPLANATION
+========================================== */
+
+function showExplanation(text){
+
+    document.getElementById("explanation-text")
+        .innerHTML=text;
+
+    document.getElementById("explanation")
+        .style.display="block";
+
+    document.getElementById("next-btn")
+        .style.display="block";
+}
+
+
+/* ==========================================
+   NEXT QUESTION
+========================================== */
+
+function nextQuestion(){
+
+    currentQuestion++;
+
+    if(currentQuestion<questions.length){
+
+        loadQuestion();
+
+    }else{
+
+        showResults();
+    }
+}
+
+
+/* ==========================================
+   RESULTS
+========================================== */
+
+function showResults(){
+
+    clearInterval(timer);
+
+    document.getElementById("quiz-screen")
+        .classList.add("hide");
+
+    document.getElementById("result-screen")
+        .classList.remove("hide");
+
+    document.getElementById("final-score")
+        .innerText=score;
+
+    const percentage=
+        Math.round((score/45)*100);
+
+    document.getElementById("percentage")
+        .innerText=percentage;
+
+    let message="";
+
+    if(percentage>=90){
+
+        message="🌟 उत्कृष्ट! तुमची तयारी खूपच उत्तम आहे.";
+
+    }else if(percentage>=75){
+
+        message="👏 खूप छान! थोड्या अधिक सरावाने आणखी चांगली कामगिरी होईल.";
+
+    }else if(percentage>=60){
+
+        message="👍 चांगली कामगिरी! अजून थोडा सराव करा.";
+
+    }else if(percentage>=40){
+
+        message="📚 समाधानकारक! विभक्ती व सामान्यरूपाचा अधिक सराव आवश्यक आहे.";
+
+    }else{
+
+        message="💪 प्रयत्न सुरू ठेवा! पुन्हा एकदा Mission विभक्ती खेळा.";
+    }
+
+    document.getElementById("grade").innerText=message;
+
+    playWinSound();
+}
+
+
+/* ==========================================
+   SIMPLE AUDIO
+========================================== */
+
+const AudioContext=
+    window.AudioContext || window.webkitAudioContext;
+
+let audioCtx=null;
+
+function getAudio(){
+
+    if(!audioCtx){
+
+        audioCtx=new AudioContext();
+    }
+
+    if(audioCtx.state==="suspended"){
+
+        audioCtx.resume();
+    }
+
+    return audioCtx;
+}
+
+
+function tone(freq,duration,type="sine"){
+
+    const ctx=getAudio();
+
+    const osc=ctx.createOscillator();
+
+    const gain=ctx.createGain();
+
+    osc.type=type;
+
+    osc.frequency.value=freq;
+
+    osc.connect(gain);
+
+    gain.connect(ctx.destination);
+
+    gain.gain.setValueAtTime(.15,ctx.currentTime);
+
+    gain.gain.exponentialRampToValueAtTime(
+        .001,
+        ctx.currentTime+duration
+    );
+
+    osc.start();
+
+    osc.stop(ctx.currentTime+duration);
+}
+
+
+function playCorrectSound(){
+
+    tone(523,.15);
+
+    setTimeout(()=>tone(659,.15),120);
+
+    setTimeout(()=>tone(784,.25),240);
+}
+
+
+function playWrongSound(){
+
+    tone(180,.3,"sawtooth");
+
+    setTimeout(()=>tone(130,.35,"sawtooth"),150);
+}
+
+
+function playWinSound(){
+
+    tone(523,.2);
+
+    setTimeout(()=>tone(659,.2),180);
+
+    setTimeout(()=>tone(784,.2),360);
+
+    setTimeout(()=>tone(1046,.5),540);
+}
+
+</script>
+
+</body>
+</html>
